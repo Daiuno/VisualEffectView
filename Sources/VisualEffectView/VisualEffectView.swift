@@ -57,10 +57,18 @@ open class VisualEffectView: UIVisualEffectView {
         
         /// Fallback blur style for iOS < 26
         fileprivate var fallbackBlurStyle: UIBlurEffect.Style {
+            #if os(tvOS)
+            // tvOS only ships the classic blur styles.
+            switch self {
+            case .regular: return .regular
+            case .clear: return .light
+            }
+            #else
             switch self {
             case .regular: return .systemMaterial
             case .clear: return .systemUltraThinMaterial
             }
+            #endif
         }
     }
     
